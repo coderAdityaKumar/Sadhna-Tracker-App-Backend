@@ -1,4 +1,5 @@
 import User from "../models/users.models.js";
+import dotenv from "dotenv"
 import {ApiError} from "../utils/ApiError.js";
 import {ApiResponse} from "../utils/ApiResponse.js";
 import {asyncHandler} from "../utils/asyncHandler.js";
@@ -6,7 +7,6 @@ import jwt from "jsonwebtoken";
 import {emailTransporter} from "../utils/email.js";
 import { validationResult } from "express-validator";
 import crypto from "crypto";
-
 
 //     registerUser,
 const registerUser = asyncHandler(async (req, res) => {
@@ -53,7 +53,7 @@ const registerUser = asyncHandler(async (req, res) => {
     const createdUser = await User.findById(user._id).select("-password -verificationToken -__v");
 
     // Optional: Send verification email
-    const verificationLink = `http://localhost:5173/verify-user?token=${verificationToken}`;
+    const verificationLink = `https://sadhna-tracker-app-frontend.vercel.app/verify-user?token=${verificationToken}`;
     try {
         await emailTransporter.sendMail({
             from: process.env.EMAIL_USER,
