@@ -12,15 +12,17 @@ import {
     registerUser,
     loginUser,
     verifyUser,
-    forgetPassword,
-    logoutUser
+    forgotPassword,
+    logoutUser,
+    resetPassword
 } from "../controllers/auth.controllers.js"
 
 // routes
 router.post("/register-user", validateRegisterUser, registerUser);
 router.get("/verify-user", validateVerifyUserToken, verifyUser);
 router.post("/login-user", loginUser);
-router.post("/forget-password", forgetPassword);
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password/:token", resetPassword);
 router.post("/logout-user", authenticateUser,logoutUser);
 
 
