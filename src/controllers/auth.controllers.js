@@ -168,7 +168,7 @@ const verifyUser = asyncHandler(async (req, res) => {
 
     res.status(200).json(new ApiResponse(200, updatedUser, "user verified"));
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 });
 
@@ -198,7 +198,7 @@ const sendVerificationCode = asyncHandler(async (req, res) => {
     });
   } catch (error) {
     // throw new ApiError(500, "error sending verification email");
-    console.log(error);
+    // console.log(error);
   }
 });
 

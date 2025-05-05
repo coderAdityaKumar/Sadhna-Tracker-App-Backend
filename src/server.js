@@ -24,8 +24,10 @@ connectDB()
 import authRouter from "./routes/auth.routes.js";
 import sadhnaRouter from "./routes/sadhna.routes.js";
 import userRouter from "./routes/user.routes.js"
+import liveRouter from "./routes/live.routes.js"
 
 // routes
 app.use("/auth", authRouter);
 app.use("/sadhna", sadhnaRouter);
 app.use("/user", userRouter);
+app.use("/live",liveRouter)

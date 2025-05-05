@@ -17,7 +17,7 @@ const getUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user?.id).select("-password -verificationToken -__v ").populate("sadhna", "-user -__v");
 
     if(!user) {
-        throw new ApiError(404, "User not found");
+        res.status(404).json(new ApiResponse(404, {}, "User not found"));
     }
 
     res.json(new ApiResponse(200, user, "user sent successfully"))
@@ -54,7 +54,31 @@ const updateUser = asyncHandler(async (req, res) => {
     }
 
     res.json(new ApiResponse(200, user, "user updated success fully"));
-})
+});
+
+// Update user role
+const updateUserRole = asyncHandler(async (req, res) => {
+    const { userId, role } = req.body;
+  
+    // Validate role
+    if (!['admin', 'user'].includes(role)) {
+      return res.json(new ApiResponse(400, {}, "Invalid role specified"));
+    }
+  
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.json(new ApiResponse(404, {}, "user not found"));
+    }
+  
+    user.role = role;
+    await user.save();
+  
+    res.status(200).json({
+      success: true,
+      message: `User role updated to ${role}`,
+      data: user
+    });
+  });
 
 const deleteUser = asyncHandler(async (req, res) => {
     const user = await User.findByIdAndDelete(req.user.id, {new:true});
@@ -66,5 +90,6 @@ export {
     getUserById,
     getUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    updateUserRole
 }
